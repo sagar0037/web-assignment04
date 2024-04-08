@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 // creating the data schema for the users
 const userSchema = new mongoose.Schema({
-  userId: mongoose.Schema.Types.ObjectId,
+  id: mongoose.Schema.Types.ObjectId,
   email: {
     type: String,
     required: true,
@@ -17,10 +17,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   purchaseHistory: [String],
-  shippingAddress: {
-    type: String,
-    required: true,
-  },
+  shippingAddress: String,
 });
 
 // exporting the user model

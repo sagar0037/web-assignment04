@@ -63,3 +63,18 @@ router.delete("/:id", getComment, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+async function getComment(req, res, next) {
+  try {
+    const comment = await Comment.findById(req.params.id);
+    if (comment == null) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+    res.comment = comment;
+    next();
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+}
+
+module.exports = router;

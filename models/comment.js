@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 
 // creating the data schema for the comments
 const commentSchema = new mongoose.Schema({
-  commentId: mongoose.Schema.Types.ObjectId,
   product: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
