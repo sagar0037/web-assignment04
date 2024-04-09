@@ -8,8 +8,8 @@ router.get("/", async (req, res) => {
   try {
     const products = await Product.find();
     res.json(products);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -29,8 +29,8 @@ router.post("/", async (req, res) => {
   try {
     const newProduct = await product.save();
     res.status(201).json(newProduct);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
@@ -51,18 +51,18 @@ router.patch("/:id", getProduct, async (req, res) => {
   try {
     const updatedProduct = await res.product.save();
     res.json(updatedProduct);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
-// Delete a product
+// delete a product by id
 router.delete("/:id", getProduct, async (req, res) => {
   try {
     await res.product.deleteOne();
-    res.json({ message: "Product deleted" });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.json({ message: "Product is deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -70,12 +70,12 @@ async function getProduct(req, res, next) {
   try {
     const product = await Product.findById(req.params.id);
     if (product == null) {
-      return res.status(404).json({ message: "Product not found" });
+      return res.status(404).json({ message: "Product not found!!" });
     }
     res.product = product;
     next();
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
 }
 

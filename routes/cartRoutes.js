@@ -8,8 +8,8 @@ router.get("/", async (req, res) => {
   try {
     const carts = await Cart.find();
     res.json(carts);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -27,12 +27,12 @@ router.post("/", async (req, res) => {
   try {
     const newCart = await cart.save();
     res.status(201).json(newCart);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
-// Update a cart
+// update a cart details
 router.patch("/:id", getCart, async (req, res) => {
   if (req.body.products != null) {
     res.cart.products = req.body.products;
@@ -43,31 +43,32 @@ router.patch("/:id", getCart, async (req, res) => {
   try {
     const updatedCart = await res.cart.save();
     res.json(updatedCart);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
-// Delete a cart
+// delete a cart by id
 router.delete("/:id", getCart, async (req, res) => {
   try {
-    await res.cart.remove();
-    res.json({ message: "Cart deleted" });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    await res.cart.deleteOne();
+    res.json({ message: "Cart is deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
+// find cart details
 async function getCart(req, res, next) {
   try {
     const cart = await Cart.findById(req.params.id);
     if (cart == null) {
-      return res.status(404).json({ message: "Cart not found" });
+      return res.status(404).json({ message: "Cart not found!!" });
     }
     res.cart = cart;
     next();
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
 }
 

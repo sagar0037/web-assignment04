@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get a single comment
+// Get a comment by id
 router.get("/:id", getComment, (req, res) => {
   res.json(res.comment);
 });
@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Update a comment
+// Update a comment by id
 router.patch("/:id", getComment, async (req, res) => {
   if (req.body.rating != null) {
     res.comment.rating = req.body.rating;
@@ -54,11 +54,11 @@ router.patch("/:id", getComment, async (req, res) => {
   }
 });
 
-// Delete a comment
+// Delete a comment by id
 router.delete("/:id", getComment, async (req, res) => {
   try {
-    await res.comment.remove();
-    res.json({ message: "Comment deleted" });
+    await res.comment.deleteOne();
+    res.json({ message: "Comment is deleted successfully." });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -68,7 +68,7 @@ async function getComment(req, res, next) {
   try {
     const comment = await Comment.findById(req.params.id);
     if (comment == null) {
-      return res.status(404).json({ message: "Comment not found" });
+      return res.status(404).json({ message: "Comment not found!!" });
     }
     res.comment = comment;
     next();

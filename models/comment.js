@@ -18,7 +18,10 @@ const commentSchema = new mongoose.Schema({
     required: true,
   },
   images: [String],
-  text: String,
+  text: {
+    type: String,
+    required: true,
+  },
 });
 
 // exporting the comment model
